@@ -4,12 +4,13 @@ import {connect} from 'react-redux';
 //import {counterIncrement, counterDecrement, welcomeAction} from './src/actions';
 import withCounter from './src/hoc/withCounter';
 import withWelcome from './src/hoc/withWelcome';
+import withAsync from './src/hoc/withAsync';
 
 class App extends React.Component {
 
   render() {
     console.log(this.props)
-    const { count, welcome:{ welcomeText }, counterIncrementAction, counterDecrementAction, createWellcomeAction } = this.props;
+    const { count, welcome:{ welcomeText }, counterIncrementAction, counterDecrementAction, createWellcomeAction, getTodos, todoData: { todos } } = this.props;
     return (
       <SafeAreaView style={styles.container}>
         <Text style={styles.counterTitle}>Counter</Text>
@@ -25,6 +26,8 @@ class App extends React.Component {
         <Text>{welcomeText}</Text>
         <Button title={'Button 1'} onPress={() => createWellcomeAction('Button 1 pressed')}/>
         <Button title={'Button 2'} onPress={() => createWellcomeAction('Button 2 pressed')}/>
+        <Button title={'Button 3'} onPress={() => getTodos('Button 3 pressed')}/>
+        <Text>{(todos.length > 0) ? todos[0].title : 'testing'}</Text>
       </SafeAreaView>
     )
   }
@@ -81,4 +84,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default withWelcome(withCounter(App));
+export default withWelcome(withCounter(withAsync(App)));

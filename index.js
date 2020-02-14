@@ -7,13 +7,19 @@ import App from './App';
 import {name as appName} from './app.json';
 import React from 'react';
 import { Provider } from 'react-redux';
-import {createStore, applyMiddleware } from 'redux';
+import {createStore, applyMiddleware, compose } from 'redux';
 import reducers from './src/reducers';
-import logger from 'redux-logger'
+import logger from 'redux-logger';
+import thunk from 'redux-thunk';
 
 const store = createStore(
   reducers,
-  applyMiddleware(logger)
+  compose(
+    applyMiddleware(
+      logger,
+      thunk
+    )
+  )
 );
 
 const AppContainer = () => {
